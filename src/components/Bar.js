@@ -4,7 +4,7 @@ import {Col, Container, Navbar} from "react-bootstrap";
 
 export const NavBar =()=>{
     return(
-        <Navbar bg="light" expand="lg" fixed="top">
+        <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
             <Container>
                 <Navbar.Brand  href="/">Главная</Navbar.Brand>
                 <Navbar.Brand  href="/convert">Конвертация</Navbar.Brand>

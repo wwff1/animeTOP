@@ -15,14 +15,8 @@ function App() {
 
             <Router>
                 <NavBar/>
-                <div>
-                    {/*<Main/>*/}
+                <div className="content">
                     {routes}
-                    {/*<Routes>*/}
-                    {/*    <Route exact path="/rr" component={Main}/>*/}
-                    {/*    /!*<Route exact path="/r" component={AboutPage}/>*!/*/}
-                    {/*    /!*<Redirect to="/" />*!/*/}
-                    {/*</Routes>*/}
                 </div>
             </Router>
     );

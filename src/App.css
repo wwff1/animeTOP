@@ -1,3 +1,7 @@
+.content{
+    margin-top: 80px;
+}
+
 h1 {
     font-weight: 700;
     font-size: 1.6rem;
@@ -27,6 +31,5 @@ h1 {
     top: 0px;
     display: block;
     position: absolute;
-    background-color: #f9f6eb;
     z-index: 999;
 }
