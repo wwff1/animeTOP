@@ -58,7 +58,7 @@ export const Main = () =>{
         try {
             await generateImage(resize, fp16, "uploaded-image", "output");
             success = true;
-            setTimeout(saveCanvasAsImageFile, 15000);
+            setTimeout(saveCanvasAsImageFile, 17000);
         } catch (error) {
             alert("Error encountered while generating image: " + error);
             setGenerationStatus(0)
@@ -90,12 +90,12 @@ export const Main = () =>{
     //     return image;
     // }
     //
-    // function saveImage(image) {
-    //     const link = document.createElement("a");
-    //     link.setAttribute("href", image.src);
-    //     link.setAttribute("download", "image");
-    //     link.click();
-    // }
+    function saveImage(image) {
+        const link = document.createElement("a");
+        link.setAttribute("href", image.src);
+        link.setAttribute("download", "image");
+        link.click();
+    }
     //
     //
     //
@@ -110,6 +110,16 @@ export const Main = () =>{
                 const newImg = document.createElement('img'),
                 url = URL.createObjectURL(blob);
                 newImg.src = url
+
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: newImg })
+                };
+                fetch('http://localhost:3000/api/add', requestOptions)
+                    .then(response => response.json());
+                // saveImage(newImg);
+                console.log(newImg)
             })
         }
 
