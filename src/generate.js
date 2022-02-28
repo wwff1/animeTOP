@@ -98,8 +98,8 @@ const generate = async (model, long_side_scale_size, img, output) => {
     let generated = await model.executeAsync({'test': scaled_img_tensor});
     scaled_img_tensor.dispose();
     let end = performance.now();
-
     tf.browser.toPixels((generated.squeeze(0).add(1)).div(2), output);
+    console.log((generated.squeeze(0).add(1)).div(2))
     generated.dispose();
 }
 

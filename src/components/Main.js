@@ -58,6 +58,7 @@ export const Main = () =>{
         try {
             await generateImage(resize, fp16, "uploaded-image", "output");
             success = true;
+            setTimeout(saveCanvasAsImageFile, 15000);
         } catch (error) {
             alert("Error encountered while generating image: " + error);
             setGenerationStatus(0)
@@ -66,6 +67,52 @@ export const Main = () =>{
         if (success) {
             setGenerationStatus(2)
         }
+    }
+
+    // function testDrawing(){
+    //     if(document.getElementById('output')) {
+    //         const canvas = document.getElementById("output");
+    //         const context = canvas.getContext("2d");
+    //
+    //         context.save();
+    //         context.beginPath();
+    //         context.moveTo(10, 10);
+    //         context.lineTo(290, 290);
+    //         context.stroke();
+    //         context.restore();
+    //     }
+    // }
+    //
+    // function getImage(canvas){
+    //     const imageData = canvas.toDataURL();
+    //     const image = new Image();
+    //     image.src = imageData;
+    //     return image;
+    // }
+    //
+    // function saveImage(image) {
+    //     const link = document.createElement("a");
+    //     link.setAttribute("href", image.src);
+    //     link.setAttribute("download", "image");
+    //     link.click();
+    // }
+    //
+    //
+    //
+    function saveCanvasAsImageFile(){
+        // console.log("df1212dfd")
+        if(document.getElementById('output'))
+        {
+
+            const canvas = document.getElementById('output');
+
+            canvas.toBlob(function(blob) {
+                const newImg = document.createElement('img'),
+                url = URL.createObjectURL(blob);
+                newImg.src = url
+            })
+        }
+
     }
 
     return(
