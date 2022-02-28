@@ -14,14 +14,13 @@ function App() {
     return (
 
             <Router>
-                {/*<NavBar/>*/}
-
-
-                <div className="content">
-                    <Main/>
+                <NavBar/>
+                <div>
+                    {/*<Main/>*/}
+                    {routes}
                     {/*<Routes>*/}
-                    {/*    <Route exact path="/" component={App}/>*/}
-                    {/*    <Route exact path="/r" component={AboutPage}/>*/}
+                    {/*    <Route exact path="/rr" component={Main}/>*/}
+                    {/*    /!*<Route exact path="/r" component={AboutPage}/>*!/*/}
                     {/*    /!*<Redirect to="/" />*!/*/}
                     {/*</Routes>*/}
                 </div>
