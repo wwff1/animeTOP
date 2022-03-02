@@ -116,9 +116,10 @@ export const Main = () =>{
                 const requestOptions = {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ image: newImg })
+                    body: { image: newImg.src }
                 };
-                fetch('http://localhost:5000/api/image/add', requestOptions)
+                console.log(requestOptions.body)
+                fetch('http://localhost:3000/api/image/add', requestOptions)
                     .then(response => response.json());
                 // saveImage(newImg);
                 console.log(newImg)
