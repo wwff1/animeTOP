@@ -3,6 +3,8 @@ import {Button, Col, Container, Form, ProgressBar, Row} from "react-bootstrap";
 import {generateImage} from "../generate";
 import "../App.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 export const Main = () =>{
     const [uploadedImageURL, setUploadedImageURL] = useState("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=")
@@ -58,7 +60,7 @@ export const Main = () =>{
         try {
             await generateImage(resize, fp16, "uploaded-image", "output");
             success = true;
-            setTimeout(saveCanvasAsImageFile, 17000);
+            setTimeout(saveCanvasAsImageFile, 25000);
         } catch (error) {
             alert("Error encountered while generating image: " + error);
             setGenerationStatus(0)
@@ -116,7 +118,7 @@ export const Main = () =>{
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ image: newImg })
                 };
-                fetch('http://localhost:3000/api/add', requestOptions)
+                fetch('http://localhost:5000/api/image/add', requestOptions)
                     .then(response => response.json());
                 // saveImage(newImg);
                 console.log(newImg)
@@ -195,7 +197,13 @@ export const Main = () =>{
                     <Row className="margin">
                         <Col/>
                         <Col xs="12" md="12" lg="12" xl="10" style={{textAlign: "center", margin: "20px"}}>
-                            <Button variant="primary" onClick={() => window.location.reload()}>Вернуться на главную</Button>
+                                <Button variant="outline-primary" onClick={() => window.location.reload()}>Вернуться на главную</Button>
+                            <Link to="/convert">
+                                <Button variant="primary">Конвертировать</Button>
+                            </Link>
+                            {/*<Button mx="" variant="info" onClick={() => window.location.reload()}>Вернуться на главную</Button>*/}
+                            {/*<Button variant="primary" onClick={() => window.location.reload()}>Конвертировать</Button>*/}
+
                         </Col>
                         <Col/>
                     </Row>
