@@ -1,7 +1,18 @@
 var fs = require('fs');
 
 exports.add = async (req, res) =>{
-    console.log("aaaaaaaaa", req.body.image);
-    const imageBuffer = req.body.image;
-    fs.createWriteStream('static/wrgo.png').write(imageBuffer);
+    const dir = './static';
+    let filename = '';
+
+    fs.readdir(dir, (err, files) => {
+        filename = `image${files.length}.png`
+        console.log(files.length);
+    });
+    console.log(filename)
+    const path = `F:/anime/animeTOP/server/static/${filename}`
+    console.log(path)
+    fs.copyFile(`C:/Users/Димас/Downloads/image.png`, path, err => { if(err) throw err; // не удалось переместить файл
+        console.log('Файл успешно перемещён1')})
+    fs.unlink('C:/Users/Димас/Downloads/image.png', err => { if(err) throw err; // не удалось переместить файл
+            console.log('Файл успешно перемещён2')})
 }

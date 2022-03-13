@@ -6,6 +6,7 @@
     "@tensorflow-models/posenet": "^2.2.2",
     "@tensorflow/tfjs": "^1.7.4",
     "@tensorflow/tfjs-core": "^3.13.0",
+    "babel-jest": "^24.9.0",
     "bootstrap": "^4.5.0",
     "gh-pages": "^2.2.0",
     "git": "^0.1.5",

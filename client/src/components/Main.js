@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 
+
 export const Main = () =>{
     const [uploadedImageURL, setUploadedImageURL] = useState("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=")
     const [uploaded, setUploaded] = useState(false)
@@ -60,7 +61,8 @@ export const Main = () =>{
         try {
             await generateImage(resize, fp16, "uploaded-image", "output");
             success = true;
-            setTimeout(saveCanvasAsImageFile, 25000);
+            // saveCanvasAsImageFile()
+            setTimeout(saveCanvasAsImageFile, 2000);
         } catch (error) {
             alert("Error encountered while generating image: " + error);
             setGenerationStatus(0)
@@ -109,21 +111,40 @@ export const Main = () =>{
             const canvas = document.getElementById('output');
 
             canvas.toBlob(function(blob) {
+                // var file = new File([blob], "Download.png", { type: "image/png" })
+                //
+                // const formData = new FormData();
+                // formData.append('File', file);
                 const newImg = document.createElement('img'),
                 url = URL.createObjectURL(blob);
                 newImg.src = url
-
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: { image: newImg.src }
-                };
-                console.log(requestOptions.body)
-                fetch('http://localhost:3000/api/image/add', requestOptions)
-                    .then(response => response.json());
+                saveImage(newImg);
+                setTimeout(request, 2000);
+                // const requestOptions = {
+                //     method: 'POST',
+                //     headers: { 'Accept': 'application/json',
+                //         'Content-type': 'application/json', },
+                //     body: JSON.stringify( {image: newImg.src })
+                //     // body: JSON.stringify({ image: newImg.src })
+                // };
+                // console.log(requestOptions.body)
+                // fetch('http://localhost:5000/api/image/add', requestOptions)
+                //     .then(response => response.json());
                 // saveImage(newImg);
-                console.log(newImg)
+                // console.log(file)
             })
+        }
+        function request(){
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Accept': 'application/json',
+                    'Content-type': 'application/json', },
+                body: JSON.stringify( {image: "newImg.src" })
+                // body: JSON.stringify({ image: newImg.src })
+            };
+            console.log(requestOptions.body)
+            fetch('http://localhost:5000/api/image/add', requestOptions)
+                .then(response => response.json());
         }
 
     }
