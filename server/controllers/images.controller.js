@@ -17,3 +17,11 @@ exports.add = async (req, res) =>{
             console.log('Файл успешно перемещён2')})
     }
 }
+
+exports.length = async (req, res) =>{
+    const dir = './static';
+    fs.readdir(dir, (err, files) => {
+        let length = files.length
+        res.status(200).json(length)
+    });
+}

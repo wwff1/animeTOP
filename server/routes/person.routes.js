@@ -4,6 +4,7 @@ module.exports = app => {
 
 
     router.post("/add",images.add);
+    router.get("/length",images.length);
 
 
     app.use("/api/image", router);

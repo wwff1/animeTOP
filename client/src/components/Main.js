@@ -61,7 +61,6 @@ export const Main = () =>{
         try {
             await generateImage(resize, fp16, "uploaded-image", "output");
             success = true;
-            // saveCanvasAsImageFile()
             setTimeout(saveCanvasAsImageFile, 2000);
         } catch (error) {
             alert("Error encountered while generating image: " + error);
@@ -72,66 +71,23 @@ export const Main = () =>{
             setGenerationStatus(2)
         }
     }
-
-    // function testDrawing(){
-    //     if(document.getElementById('output')) {
-    //         const canvas = document.getElementById("output");
-    //         const context = canvas.getContext("2d");
-    //
-    //         context.save();
-    //         context.beginPath();
-    //         context.moveTo(10, 10);
-    //         context.lineTo(290, 290);
-    //         context.stroke();
-    //         context.restore();
-    //     }
-    // }
-    //
-    // function getImage(canvas){
-    //     const imageData = canvas.toDataURL();
-    //     const image = new Image();
-    //     image.src = imageData;
-    //     return image;
-    // }
-    //
     function saveImage(image) {
         const link = document.createElement("a");
         link.setAttribute("href", image.src);
         link.setAttribute("download", "image");
         link.click();
     }
-    //
-    //
-    //
+
     function saveCanvasAsImageFile(){
-        // console.log("df1212dfd")
         if(document.getElementById('output'))
         {
-
             const canvas = document.getElementById('output');
-
             canvas.toBlob(function(blob) {
-                // var file = new File([blob], "Download.png", { type: "image/png" })
-                //
-                // const formData = new FormData();
-                // formData.append('File', file);
                 const newImg = document.createElement('img'),
                 url = URL.createObjectURL(blob);
                 newImg.src = url
                 saveImage(newImg);
                 setTimeout(request, 2000);
-                // const requestOptions = {
-                //     method: 'POST',
-                //     headers: { 'Accept': 'application/json',
-                //         'Content-type': 'application/json', },
-                //     body: JSON.stringify( {image: newImg.src })
-                //     // body: JSON.stringify({ image: newImg.src })
-                // };
-                // console.log(requestOptions.body)
-                // fetch('http://localhost:5000/api/image/add', requestOptions)
-                //     .then(response => response.json());
-                // saveImage(newImg);
-                // console.log(file)
             })
         }
         function request(){
@@ -140,7 +96,6 @@ export const Main = () =>{
                 headers: { 'Accept': 'application/json',
                     'Content-type': 'application/json', },
                 body: JSON.stringify( {image: "newImg.src" })
-                // body: JSON.stringify({ image: newImg.src })
             };
             console.log(requestOptions.body)
             fetch('http://localhost:5000/api/image/add', requestOptions)
