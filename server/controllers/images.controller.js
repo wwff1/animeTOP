@@ -1,4 +1,8 @@
+const db = require("../models");
+const Pictures = db.Pic_model;
+const {QueryTypes} = require('sequelize');
 var fs = require('fs');
+
 
 exports.add = async (req, res) =>{
     const dir = './static';
@@ -24,4 +28,37 @@ exports.length = async (req, res) =>{
         let length = files.length
         res.status(200).json(length)
     });
+}
+
+exports.findAll = async (req, res)=>{
+    Pictures.findAll().then(
+        data => {
+            res.send(data);
+        }
+    ).catch(err=>{
+        res.status(500).send({
+            message: err.message || "Some problem"
+        });
+    });
+}
+
+exports.AddPics = async (req, res) =>{
+    try{
+
+        const {title, size_pic} = req.body;
+        console.log(req.body)
+        const pic = new Pictures({ title, size_pic })
+        const candidate = await Pictures.findOne({ where: {title: title }})
+
+        if (candidate) {
+            return res.status(400).json({ message: 'Такой ))) уже существует' })
+        }
+
+        pic.save();
+        res.status(201).json({ message: 'Rfhnbyrf lj,fdktyf' })
+
+    }
+    catch (e){
+        res.status(500).json({message: "Xnj nj yt nfr"})
+    }
 }

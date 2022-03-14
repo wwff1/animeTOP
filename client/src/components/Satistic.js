@@ -1,34 +1,97 @@
-import React, {useState} from 'react'
+
+import React, {useCallback, useEffect, useState} from 'react'
 import {baseUrl} from "./BaseRoute";
 import fileDownload from "js-file-download";
 import {forEach} from "react-bootstrap/ElementChildren";
-window.s = 0;
-
-let v = 0
 
 export const Statistic = () => {
 
-    //const [size, setSize] = useState()
+    var ss = 0;
     let numbers = [];
-    let size = 0;
+    var size = 0;
+    let img = [];
+    const [len, setLen] = useState();
+    const [pic, setPic] = useState();
 
-    const [len, setLen] = useState()
-    function request(){
+
+    function addHandler(title, size) {
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: { 'Accept': 'application/json',
+        //         'Content-type': 'application/json', },
+        //     body: {
+        //         title: title,
+        //         size: size
+        //     }
+        // };
+        // fetch('http://localhost:5000/api/image/addPic', requestOptions)
+        //     .then(response => response.json()).then(data => console.log(data));
+        //
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: title,
+                size_pic: size
+            })
+        };
+        console.log(requestOptions.body)
+        img.push(requestOptions.body)
+        fetch('http://localhost:5000/api/image/addPic', requestOptions)
+            .then(response => response.json()).then(data => console.log(data));
+    }
+
+
+    function getHandler() {
+        const requestOptions = {
+            method: 'GET'
+        };
+        const request = fetch('http://localhost:5000/api/image/getAll', requestOptions)
+            .then(response => response.json()).then(data => f(data));
+    }
+
+    function f(data) {
+
+        const tbody = document.querySelector('tbody');
+        const st = document.getElementById('st');
+        st.innerHTML = `<h4 class="my-3">Количество файлов: ${len} </h4>`
+        tbody.innerHTML = "";
+        let sum = 0
+        let sr = 0
+        data.map((item) => {
+            console.log(item.title)
+            sum += item.size_pic
+            sr = sum / len
+            tbody.innerHTML += `<tr><td><img src=${baseUrl + "/" + item.title}></td><td>${item.title}</td><td>${item.size_pic}</td></tr>`
+        })
+        tbody.innerHTML += `<h4  class="my-3">Общий вес изображений: ${sum} байт</h4>`
+        tbody.innerHTML += `<h4 class="my-3">Средний вес изображения: ${sr} байт</h4>`
+    }
+
+
+    console.log(img)
+
+    function request() {
         const requestOptions = {
             method: 'GET'
         };
         const request = fetch('http://localhost:5000/api/image/length', requestOptions)
             .then(response => response.json()).then(data => setLen(data));
-        for (let i = 0; i < len; i++)
-        {
-            numbers.push('image'+i+'.png')
+        for (let i = 0; i < len; i++) {
+            numbers.push('image' + i + '.png')
         }
     }
-    request()
 
-    function fun (value){
+    request()
+    getHandler()
+
+
+    function fun(value) {
         size = value.size;
-        v = value.size
         // console.log(size);
         // img.size = value.size
         // img.push({size: value.size, title: number});
@@ -38,81 +101,77 @@ export const Statistic = () => {
         // img.push(number: value.size);
         return size
     }
-    const img = []
+
     // console.log(size);
     // var size = 0;
+    const listItems = numbers.map((itemm) => {
+        let path = baseUrl + "/" + itemm;
+        let blob = fetch(path).then(r => r.blob());
 
-
-    const listItems = numbers.map((number) =>{
-        // const img = [{number: 8}, {number: 8}];
-        let path = baseUrl+"/"+number;
-        let blob = fetch(path).then(r => r.blob()).then((value) => {
-
-            img.push({number: value.size})
-            // size = value
-            // console.log(value.size)
-            return value.size
+        // console.log(blob)
+        blob.then(value => fun(value)).then((value) => {
+            //size = value
+            //ss = Number(value);
+            // console.log(value)
+            //return value;
+            img.push({[itemm]: value});
         });
+        // console.log(img)
 
-        let objArray = [ { foo: 1, bar: 2}, { foo: 3, bar: 4}, { foo: 5, bar: 6} ]
-        // let result = objArray.map(({ foo }) => foo)
-        // let result = img.map(({ number }) => number)
-        // console.log(objArray)
-        console.log(objArray.map(({ foo }) => console.log(foo)))
-        // console.log(result)
-        // console.log(blob)
-        // const varible = blob
-
-        // console.log(blob)
-        // const size = img.filter(el => el["title"] === number)
-        // console.log(listItems)
-        // console.log(size)
+        // console.log(varible)
+        const zz = img.find(el => el.key === 'image0.png')
+        console.log(img.itemm)
         return (
             <>
 
                 <tr>
                     <td><img src={path}/></td>
-                    <td>{number}</td>
-                    {
-
-                    }
-                    {/*<td>{img.number}</td>*/}
+                    <td>{itemm}</td>
+                    <td>{img[itemm]}</td>
                 </tr>
 
             </>
         )
     });
+    console.log(img)
 
 
-    // console.log(listItems);
-    //let blob = uploadedImage[0].slice(0, uploadedImage[0].size, 'image/png');
-    // console.log(numbers[0]);
-    //let path = baseUrl+"/"+numbers[0];
-    //let blob = fetch(path).then(r => r.blob());
-    //let newFile = new File([blob], 'convert_to_png.png', {type: 'image/png'});
-    // console.log(img);
+    const Items = numbers.map((number) => {
+        let path = baseUrl + "/" + number;
+        let blob = fetch(path).then(r => r.blob()).then((value) => {
+            addHandler(number, value.size);
+
+        });
+
+    })
+    console.log(img)
+
+    return (
+
+    <div className="container">
+        <div className="row">
+            <h1 style={{margin: "25px", textAlign: "center"}}>Статистика по файлам</h1>
+        </div>
+        <div className="row" id="st"></div>
+        <div className="row">
+            <div className="col-12">
+                <table className="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">IMAGE</th>
+                        <th scope="col">TITLE</th>
+                        <th scope="col">SIZE (байт)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
 
 
-
-    return(
-        <table>
-
-            <thead>
-
-            </thead>
-            <tbody>
-            {listItems && listItems.map((item)=>{
-                return(
-
-                    <>{item}</>
-
-                )
-            })}
-            </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
-        </table>
-
-    )
-
+)
 }

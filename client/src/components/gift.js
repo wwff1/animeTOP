@@ -46,7 +46,7 @@ export const Gift =()=>{
         html2canvas(document.getElementById("gift")).then(canvas => {
             var image = new Image();
             image.src = canvas.toDataURL();
-            saveAs(image.src, 'gift.jpg')
+            saveAs(image.src, 'gift.png')
         });
     }
 
