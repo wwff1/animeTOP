@@ -9,7 +9,7 @@ export const NavBar =()=>{
                 <Navbar.Brand  href="/">Главная</Navbar.Brand>
                 <Navbar.Brand  href="/convert">Конвертация</Navbar.Brand>
                 <Navbar.Brand  href="/statistic">Статистика</Navbar.Brand>
-                <Navbar.Brand  href="/gallery">Галлерея</Navbar.Brand>
+                <Navbar.Brand  href="/gallery">Галерея</Navbar.Brand>
                 <Navbar.Brand  href="/gift">Открытка</Navbar.Brand>
             </Container>
         </Navbar>

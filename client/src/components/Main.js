@@ -34,11 +34,11 @@ export const Main = () =>{
         }
 
         if (uploaded === false) {
-            alert("Please upload an image.");
+            alert("Загрузите изображение.");
             return;
         }
         if (resize === "none") {
-            alert("Please select a resize method.");
+            alert("Выберите метод изменения размера.");
             return;
         }
 
@@ -61,9 +61,9 @@ export const Main = () =>{
         try {
             await generateImage(resize, fp16, "uploaded-image", "output");
             success = true;
-            setTimeout(saveCanvasAsImageFile, 2000);
+            setTimeout(saveCanvasAsImageFile, 16000);
         } catch (error) {
-            alert("Error encountered while generating image: " + error);
+            alert("Произошла ошибка при создании изображения: " + error);
             setGenerationStatus(0)
         }
 
@@ -107,7 +107,7 @@ export const Main = () =>{
     return(
         <div className="app">
             <Container fluid style={{"display": generationStatus === 0 ? "block" : "none"}}>
-
+                <h1 style={{textAlign: "center", margin: "25px"}}>animeTOP</h1>
                 <Row className="margin">
                     <Col/>
                     <Col xs="12" md="8" lg="6">
@@ -151,9 +151,7 @@ export const Main = () =>{
                             <Col/>
                             <Col xs="12" md="8" lg="6" style={{textAlign: "center"}}>
                                 <ProgressBar now={generationProgress} style={{"margin": "10px"}} />
-                                <p>Generating image...</p>
-                                <p>This may take 15 to 30 seconds depending on your device.</p>
-                                <p>Memory usage (MB): {bytesUsed / 1000000} </p>
+                                <p>Генерация изображения...</p>
                             </Col>
                             <Col/>
                         </Row>
@@ -166,7 +164,7 @@ export const Main = () =>{
                 <Container fluid>
                     <Row className="margin">
                         <Col/>
-                        <Col xs="12" md="8" lg="5" xl="4" style={{textAlign: "center", margin: "20px"}}>
+                        <Col xs="12" md="8" lg="5" xl="4" style={{textAlign: "center", marginTop: "100px"}}>
                             <canvas id="output"></canvas>
                         </Col>
                         <Col/>
@@ -174,13 +172,7 @@ export const Main = () =>{
                     <Row className="margin">
                         <Col/>
                         <Col xs="12" md="12" lg="12" xl="10" style={{textAlign: "center", margin: "20px"}}>
-                                <Button variant="outline-primary" onClick={() => window.location.reload()}>Вернуться на главную</Button>
-                            <Link to="/convert">
-                                <Button variant="primary">Конвертировать</Button>
-                            </Link>
-                            {/*<Button mx="" variant="info" onClick={() => window.location.reload()}>Вернуться на главную</Button>*/}
-                            {/*<Button variant="primary" onClick={() => window.location.reload()}>Конвертировать</Button>*/}
-
+                            <Button variant="outline-primary" onClick={() => window.location.reload()}>Вернуться на главную</Button>
                         </Col>
                         <Col/>
                     </Row>

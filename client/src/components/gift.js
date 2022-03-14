@@ -29,11 +29,11 @@ export const Gift =()=>{
         }
 
         if (uploaded === false) {
-            alert("Please upload an image.");
+            alert("Загрузите изображение.");
             return;
         }
         if (resize === "none") {
-            alert("Please select a resize method.");
+            alert("Выберите персонажа.");
             return;
         }
         setGenerationStatus(1)
@@ -53,10 +53,12 @@ export const Gift =()=>{
     console.log(quote)
     return(
         <div className="app">
-            <Container>
+            <Container fluid>
+                <h1 style={{textAlign: "center", margin: "25px"}}>Открытка</h1>
                 <div className="row justify-content-md-center">
                     <div className="col-6">
                         <div className="row justify-content-md-center">
+
                             <div className="col-12">
                                 <Form>
                                     <Form.File accept="image/*" label={(uploaded ? "Выберите изображение" : "Загрузить изображение")} onChange={onUpload} multiple={false} custom />
@@ -64,7 +66,7 @@ export const Gift =()=>{
                             </div>
                         </div>
                         <div className="row justify-content-md-center">
-                            <div className="col-12" style={{textAlign: "center", margin: "20px"}}>
+                            <div className="col-xs-12 col-md-8" style={{textAlign: "center", margin: "25px"}}>
                                 <img id="uploaded-image" alt="" src={uploadedImageURL} />
                             </div>
                         </div>

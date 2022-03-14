@@ -26,11 +26,11 @@ export const Convert =  ({image}) => {
 
     function convert(){
         if (uploaded === false) {
-            alert("Please upload an image.");
+            alert("Загрузите изображение.");
             return;
         }
         if (resize === "none") {
-            alert("Please select a resize method.");
+            alert("Выберите метод изменения файла.");
             return;
         }
 
@@ -50,9 +50,9 @@ export const Convert =  ({image}) => {
 
     return(
        <>
-           <div className="app" id="lol">
-               <Container>
-
+           <div className="app">
+               <Container fluid>
+                   <h1 style={{textAlign: "center", margin: "25px"}}>Конвертация</h1>
                    <Row className="margin">
                        <Col/>
                        <Col xs="12" md="8" lg="6">
@@ -75,9 +75,9 @@ export const Convert =  ({image}) => {
                            <Form>
                                <Form.Group controlId="resize">
                                    <Form.Control defaultValue="none" as="select" onChange={(e) => setResize(e.target.value)}>
-                                       <option value="none" disabled>Выберите</option>
-                                       <option value="p">png</option>
-                                       <option value="j">jpg</option>
+                                       <option value="none" disabled>Выберите расширение файла</option>
+                                       <option value="p">.PNG</option>
+                                       <option value="j">.JPEG</option>
                                    </Form.Control>
                                </Form.Group>
                                <Button variant="primary" onClick={convert}>Конверировать</Button>

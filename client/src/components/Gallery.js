@@ -18,11 +18,13 @@ export const Gallery = () => {
         }
     }
     request()
+    console.log(numbers)
     const listItems = numbers.map((number) =>{
         return <img style={{width:"100%", height:"100%", objectFit:"contain"}} src={baseUrl+"/"+number}/>
     });
     return(
         <div className="product">
+            <h1 style={{textAlign: "center", margin: "25px"}}>Галерея</h1>
             <div className="row">
                 { listItems &&
                     listItems.map((item) => {
