@@ -20,7 +20,7 @@ export const Gallery = () => {
     request()
     console.log(numbers)
     const listItems = numbers.map((number) =>{
-        return <img style={{width:"100%", height:"100%", objectFit:"contain"}} src={baseUrl+"/"+number}/>
+        return ([<img style={{width:"95%", height:"95%", objectFit:"contain"}} src={baseUrl+"/"+number}/>, <p style={{textAlign: "center"}}>{number}</p>])
     });
     return(
         <div className="product">

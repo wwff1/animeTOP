@@ -117,7 +117,7 @@ let generateImage = async (resize, fp16, img_id, canvas_id) => {
     let long_side_scale_size;
 
     if (resize === "l") {
-        long_side_scale_size = 500;
+        long_side_scale_size = 50;
     } else {
         long_side_scale_size = -1;
     }
