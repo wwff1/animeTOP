@@ -3,3 +3,8 @@ export let counter = 0;
 export function incCounter(time) {
     counter = time;
 }
+
+export let mas = [];
+export function incMas(elem) {
+    mas = elem;
+}

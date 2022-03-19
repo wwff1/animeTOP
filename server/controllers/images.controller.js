@@ -37,7 +37,11 @@ exports.length = async (req, res) =>{
 }
 
 exports.findAll = async (req, res)=>{
-    Pictures.findAll().then(
+    let queryParams = {
+        where: {},
+        order: [ [ 'size_pic', 'ASC' ] ]
+    };
+    Pictures.findAll(queryParams).then(
         data => {
             res.send(data);
         }
