@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {Button, Col, Container, Form, ProgressBar, Row} from "react-bootstrap";
 import {saveAs} from "file-saver";
 import html2canvas from 'html2canvas';
+import { useAlert } from 'react-alert';
 
 export const Gift =()=>{
     const [uploadedImageURL, setUploadedImageURL] = useState("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=")
@@ -23,6 +24,13 @@ export const Gift =()=>{
         };
         reader.readAsDataURL(input.files[0]);
     }
+
+    const alert = useAlert()
+
+    function ViewAlert(message){
+        alert.show(message);
+    }
+
     async function generate(){
         if (generationStatus !== 0) {
             return;
@@ -40,6 +48,7 @@ export const Gift =()=>{
         fetch('https://animechan.vercel.app/api/quotes/character?name='+resize)
             .then(response => response.json())
             .then(quotes => setQuote(quotes[0].quote))
+        ViewAlert("открытка сгенерирована");
     }
 
     function saveHandler(){
