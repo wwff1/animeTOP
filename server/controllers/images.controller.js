@@ -51,9 +51,9 @@ exports.findAll = async (req, res)=>{
 exports.AddPics = async (req, res) =>{
     try{
 
-        const {title, size_pic} = req.body;
+        const {title, size_pic, time} = req.body;
         console.log(req.body)
-        const pic = new Pictures({ title, size_pic })
+        const pic = new Pictures({ title, size_pic, time })
         const candidate = await Pictures.findOne({ where: {title: title }})
 
         if (candidate) {

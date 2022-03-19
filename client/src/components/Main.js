@@ -3,6 +3,7 @@ import {Button, Col, Container, Form, ProgressBar, Row} from "react-bootstrap";
 import {generateImage} from "../generate";
 import "../App.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {incCounter, counter} from "./BaseRoute";
 import {Link} from "react-router-dom";
 import {NavLink} from "react-router-dom";
 import {data} from "@tensorflow/tfjs";
@@ -17,7 +18,7 @@ export const Main = () =>{
     const [updateGenerationProgressInterval, setUpdateGenerationProgressInterval] = useState(-1)
     const [bytesUsed, setBytesUsed] = useState(0)
     const [generationProgress, setGenerationProgress] = useState(false)
-    const [time, setTime] = useState(new Date().getTime());
+    // const [timeB, setTimeB] = useState(0);
 
     function onUpload(e) {
         var input = e.target;
@@ -45,7 +46,6 @@ export const Main = () =>{
             return;
         }
         const start= new Date();
-        console.log(time)
         window.progress = 0;
         window.bytesUsed = 0;
 
@@ -65,7 +65,7 @@ export const Main = () =>{
         try {
             await generateImage(resize, fp16, "uploaded-image", "output");
             success = true;
-            setTimeout(saveCanvasAsImageFile, 3000);
+            setTimeout(saveCanvasAsImageFile, 16000);
         } catch (error) {
             alert("Произошла ошибка при создании изображения: " + error);
             setGenerationStatus(0)
@@ -74,45 +74,35 @@ export const Main = () =>{
         if (success) {
             setGenerationStatus(2)
         }
-        const end = new Date();
-        console.log(end - start)
-        const refresh = () => {
-            setTime(new Date().getTime());
-            console.log("ref")
-        };
-        refresh()
-        console.log(time)
-    }
 
+        const end = new Date();
+        incCounter(end.getTime()-start.getTime());
+    }
     function saveImage(image) {
         const link = document.createElement("a");
         link.setAttribute("href", image.src);
         link.setAttribute("download", "image");
         link.click();
     }
-
     function addHandler(title) {
-        // const start = new Date();
-        // generate()
-        // const end = new Date();
-        // console.log(end - start)
-        // const canvas = document.getElementById('output');
-        // canvas.toBlob(function(blob) {
-        //     const requestOptions = {
-        //         method: 'POST',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Content-type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             title: title,
-        //             size_pic: blob.size
-        //         })
-        //     };
-        //     console.log(requestOptions.body)
-        //     fetch('http://localhost:5000/api/image/addPic', requestOptions)
-        //         .then(response => response.json()).then(data => console.log(data));
-        // })
+        const canvas = document.getElementById('output');
+        canvas.toBlob(function(blob) {
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    size_pic: blob.size,
+                    time: counter
+                })
+            };
+            console.log(requestOptions.body)
+            fetch('http://localhost:5000/api/image/addPic', requestOptions)
+                .then(response => response.json()).then(data => console.log(data));
+        })
 
     }
 

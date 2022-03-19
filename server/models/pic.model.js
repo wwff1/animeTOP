@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         size_pic: {
             type: Sequelize.INTEGER
+        },
+        time: {
+            type: Sequelize.INTEGER
         }
 
     });

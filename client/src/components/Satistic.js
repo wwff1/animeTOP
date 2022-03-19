@@ -14,36 +14,36 @@ export const Statistic = () => {
     const [pic, setPic] = useState();
 
 
-    function addHandler(title, size) {
-        // const requestOptions = {
-        //     method: 'POST',
-        //     headers: { 'Accept': 'application/json',
-        //         'Content-type': 'application/json', },
-        //     body: {
-        //         title: title,
-        //         size: size
-        //     }
-        // };
-        // fetch('http://localhost:5000/api/image/addPic', requestOptions)
-        //     .then(response => response.json()).then(data => console.log(data));
-        //
-
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                title: title,
-                size_pic: size
-            })
-        };
-        console.log(requestOptions.body)
-        img.push(requestOptions.body)
-        fetch('http://localhost:5000/api/image/addPic', requestOptions)
-            .then(response => response.json()).then(data => console.log(data));
-    }
+    // function addHandler(title, size) {
+    //     // const requestOptions = {
+    //     //     method: 'POST',
+    //     //     headers: { 'Accept': 'application/json',
+    //     //         'Content-type': 'application/json', },
+    //     //     body: {
+    //     //         title: title,
+    //     //         size: size
+    //     //     }
+    //     // };
+    //     // fetch('http://localhost:5000/api/image/addPic', requestOptions)
+    //     //     .then(response => response.json()).then(data => console.log(data));
+    //     //
+    //
+    //     const requestOptions = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             title: title,
+    //             size_pic: size
+    //         })
+    //     };
+    //     console.log(requestOptions.body)
+    //     img.push(requestOptions.body)
+    //     fetch('http://localhost:5000/api/image/addPic', requestOptions)
+    //         .then(response => response.json()).then(data => console.log(data));
+    // }
 
 
     function getHandler() {
@@ -136,14 +136,14 @@ export const Statistic = () => {
     console.log(img)
 
 
-    const Items = numbers.map((number) => {
-        let path = baseUrl + "/" + number;
-        let blob = fetch(path).then(r => r.blob()).then((value) => {
-            addHandler(number, value.size);
-
-        });
-
-    })
+    // const Items = numbers.map((number) => {
+    //     let path = baseUrl + "/" + number;
+    //     let blob = fetch(path).then(r => r.blob()).then((value) => {
+    //         // addHandler(number, value.size);
+    //
+    //     });
+    //
+    // })
     console.log(img)
 
     return (
