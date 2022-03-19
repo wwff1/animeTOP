@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {useRoutes} from "./routes";
 import "./App.css"
 import {NavBar} from "./components/Bar";
-import {Main} from "./components/Main";
 
 
 

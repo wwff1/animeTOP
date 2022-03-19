@@ -4,6 +4,7 @@ import {saveAs} from "file-saver";
 import html2canvas from 'html2canvas';
 import { useAlert } from 'react-alert';
 
+
 export const Gift =()=>{
     const [uploadedImageURL, setUploadedImageURL] = useState("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=")
     const [uploaded, setUploaded] = useState(false)

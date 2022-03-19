@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import fileDownload from 'js-file-download'
-
+import { useAlert } from "react-alert";
 
 
 export const Convert =  ({image}) => {
@@ -9,6 +9,12 @@ export const Convert =  ({image}) => {
     const [uploadedImageURL, setUploadedImageURL] = useState("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=")
     const [uploaded, setUploaded] = useState(false)
     const [resize, setResize] = useState("none")
+
+    const alert = useAlert()
+
+    function ViewAlert(message){
+        alert.show(message);
+    }
 
     function onUpload(e) {
         var input = e.target;
@@ -39,12 +45,15 @@ export const Convert =  ({image}) => {
             let blob = uploadedImage[0].slice(0, uploadedImage[0].size, 'image/png');
             let newFile = new File([blob], 'convert_to_png.png', {type: 'image/png'});
             fileDownload(newFile, newFile.name)
+            ViewAlert("Изображение сконвертиовано в .PNG и сохранено")
         }
         else if(resize === "j")
         {
             let blob = uploadedImage[0].slice(0, uploadedImage[0].size, 'image/png');
             let newFile = new File([blob], 'convert_to_jpg.jpg', {type: 'image/jpg'});
             fileDownload(newFile, newFile.name)
+            ViewAlert("Изображение сконвертиовано .JPEG и сохранено")
+
         }
     }
 
