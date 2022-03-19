@@ -11,14 +11,20 @@ exports.add = async (req, res) =>{
         filename = `image${files.length}.png`
         copy()
         setTimeout(delet, 2000)
+        console.log(filename)
+        res.status(200).json(filename)
     });
+    var copyTrue = false
+    var deleteTrue = false
     function copy(){
         fs.copyFile(`C:/Users/Димас/Downloads/image.png`, `F:/anime/animeTOP/server/static/${filename}`, err => { if(err) throw err; // не удалось переместить файл
             console.log('Файл успешно перемещён1')})
+        copyTrue = true
     }
     function delet(){
         fs.unlink('C:/Users/Димас/Downloads/image.png', err => { if(err) throw err; // не удалось переместить файл
             console.log('Файл успешно перемещён2')})
+        deleteTrue = true
     }
 }
 
@@ -45,9 +51,9 @@ exports.findAll = async (req, res)=>{
 exports.AddPics = async (req, res) =>{
     try{
 
-        const {title, size_pic} = req.body;
+        const {title, size_pic, time} = req.body;
         console.log(req.body)
-        const pic = new Pictures({ title, size_pic })
+        const pic = new Pictures({ title, size_pic, time })
         const candidate = await Pictures.findOne({ where: {title: title }})
 
         if (candidate) {

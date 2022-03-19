@@ -3,8 +3,10 @@ import {Button, Col, Container, Form, ProgressBar, Row} from "react-bootstrap";
 import {generateImage} from "../generate";
 import "../App.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {incCounter, counter} from "./BaseRoute";
 import {Link} from "react-router-dom";
 import {NavLink} from "react-router-dom";
+import {data} from "@tensorflow/tfjs";
 
 
 export const Main = () =>{
@@ -16,6 +18,7 @@ export const Main = () =>{
     const [updateGenerationProgressInterval, setUpdateGenerationProgressInterval] = useState(-1)
     const [bytesUsed, setBytesUsed] = useState(0)
     const [generationProgress, setGenerationProgress] = useState(false)
+    // const [timeB, setTimeB] = useState(0);
 
     function onUpload(e) {
         var input = e.target;
@@ -29,6 +32,7 @@ export const Main = () =>{
     }
 
     async function generate(){
+
         if (generationStatus !== 0) {
             return;
         }
@@ -41,7 +45,7 @@ export const Main = () =>{
             alert("Выберите метод изменения размера.");
             return;
         }
-
+        const start= new Date();
         window.progress = 0;
         window.bytesUsed = 0;
 
@@ -70,6 +74,9 @@ export const Main = () =>{
         if (success) {
             setGenerationStatus(2)
         }
+
+        const end = new Date();
+        incCounter(end.getTime()-start.getTime());
     }
     function saveImage(image) {
         const link = document.createElement("a");
@@ -77,12 +84,34 @@ export const Main = () =>{
         link.setAttribute("download", "image");
         link.click();
     }
+    function addHandler(title) {
+        const canvas = document.getElementById('output');
+        canvas.toBlob(function(blob) {
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    size_pic: blob.size,
+                    time: counter
+                })
+            };
+            console.log(requestOptions.body)
+            fetch('http://localhost:5000/api/image/addPic', requestOptions)
+                .then(response => response.json()).then(data => console.log(data));
+        })
+
+    }
 
     function saveCanvasAsImageFile(){
         if(document.getElementById('output'))
         {
             const canvas = document.getElementById('output');
             canvas.toBlob(function(blob) {
+
                 const newImg = document.createElement('img'),
                 url = URL.createObjectURL(blob);
                 newImg.src = url
@@ -90,7 +119,8 @@ export const Main = () =>{
                 setTimeout(request, 2000);
             })
         }
-        function request(){
+
+        async function request(){
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Accept': 'application/json',
@@ -98,8 +128,8 @@ export const Main = () =>{
                 body: JSON.stringify( {image: "newImg.src" })
             };
             console.log(requestOptions.body)
-            fetch('http://localhost:5000/api/image/add', requestOptions)
-                .then(response => response.json());
+            const request = fetch('http://localhost:5000/api/image/add', requestOptions)
+                .then(response => response.json()).then(data => addHandler(data));
         }
 
     }
